@@ -14,7 +14,9 @@
                 <div class="button-container justify-content-center">
                     {% comment %} <form id="startDetectionForm" method="post" action="{% url 'phishing:real_time_detection' %}"> {% endcomment %}
                         {% comment %} {% csrf_token %} {% endcomment %}
-                        <button class="btn btn-info btn-fill btn-lg" type="submit"><h3 id="NSK">탐지 시작하기</h3></button>
+                        <a href="/test_result/">
+                            <button class="btn btn-info btn-fill btn-lg" type="submit"><h3 id="NSK">탐지 시작하기</h3></button>
+                        </a>
                         {% comment %} 중지해서 홈으로 이동 {% endcomment %}
                     {% comment %} </form> {% endcomment %}
                     <button href="/" class="btn btn-fill btn-lg" onclick="location.href='/'"><h3 id="NSK">중지하기</h3></button>
