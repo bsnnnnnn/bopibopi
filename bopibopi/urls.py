@@ -24,3 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('phishing.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# media_url 설정
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

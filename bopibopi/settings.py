@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -70,7 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "bopibopi.wsgi.application"
-
+# ASGI_APPLICATION = "bopibopi.routing.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -85,24 +87,33 @@ DATABASES = {
 
 DATABASES = {
     #gcp_db
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": 'bopibopi',
-        "USER": 'admin',
-        "PASSWORD": 'admin1234',
-        "HOST": '35.194.218.162',
-        'PORT': '3306',
-    }
-    # 로컬 db
     # "default": {
     #     "ENGINE": "django.db.backends.mysql",
     #     "NAME": 'bopibopi',
-    #     "USER": 'root',
-    #     "PASSWORD": '0357',
-    #     "HOST": '127.0.0.1',
+    #     "USER": 'admin',
+    #     "PASSWORD": 'admin1234',
+    #     "HOST": '35.194.218.162',
     #     'PORT': '3306',
-    # },
+    # }
+    # 로컬 db
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": 'dvdvdeep_test',
+        "USER": 'root',
+        "PASSWORD": '0357',
+        "HOST": '127.0.0.1',
+        'PORT': '3306',
+    },
+    # "second_db": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     'NAME': 'dvdvdeep_test_pg',
+    #     'USER': 'admin',
+    #     'PASSWORD': 'admin1234',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    # }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -148,3 +159,21 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# settings.py
+# MIGRATION_MODULES = {
+#     'phishing': 'custom_schema.phishing_migrations',
+# }
+
+
+################### pinecone
+import pinecone
+
+# pinecone 클라이언트 초기화
+pinecone.init(
+    api_key="a4e65403-dcf3-4148-81d9-efe3b10c9be3",
+    environment="gcp-starter"
+    )

@@ -6,7 +6,10 @@
 
 /* 드래그 색상 */
 *::selection {
-  background: #00abc0;
+  /* background: #00abc0; */
+  /* background: #2359ad; */
+  /* #2359ad */
+  background: #297eca; 
   color: #FFFFFF;
 }
 

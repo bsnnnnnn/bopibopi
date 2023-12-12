@@ -12,41 +12,18 @@
             <div class="section section-cards">
                 <div class="separator-container">        
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card card-plain">
-                                <div class="content">
-                                    <a href="">
-                                        <div class="icon text-gray">
-                                            <i class="pe-7s-attention"></i>
-                                        </div>
-                                        <h3 id="NSK" class="text-gray">탐지내용</h3>
-                                        <br>
-                                        <div style="display: inline-block;">
-                                            <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">12</h2>
-                                        </div>
-                                        <h3 id="NSK" style="display: inline;">건</h3>
-                                        <br>
-                                        <br>
-                                        <!-- 세부 내용 확인(input text) 관련은 추후 진행 -->
-                                        <!-- <h4 id="NSK">세부내용 확인하기</h4> -->
-                                        <br>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
+                        {% comment %} <div class="col-md-6"> {% endcomment %}
                             <div class="card card-plain">
                                 <div class="content">
                                     <div class="icon text-gray">
                                         <i class="pe-7s-check"></i>
                                     </div>
                                     <p id="NSK">탐지 결과</p>
-                                    <div class="card-title text-info"><h3 id="NSK">위험도가 낮은 내용</h3></div>
-                                    <span id="NSK">입니다.</span>
+                                    <div class="card-title text-info"><h3 id="NSK">복제 음성일 가능성이 낮습니다.</h3></div>
+                                    {% comment %} <span id="NSK">입니다.</span> {% endcomment %}
                                 </div>
                             </div>
-                        </div>
+                        {% comment %} </div> {% endcomment %}
                             
                     </div>
                 </div>
@@ -54,26 +31,26 @@
             <!-- <div class="justify-content-center"> -->
             <div class="button-container justify-content-center">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/rel_org/">
                             <button id="NSK" class="btn btn-info btn-lg" type="button">관련 기관 정보 보기</button>
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/notify/">
                             <button id="NSK" class="btn btn-fill btn-info btn-lg" type="button">의심번호 신고하기</button>
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/victim_guide/">
                             <button id="NSK" class="btn btn-info btn-lg" type="button">피해 시 대응방법 보기</button>   
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    {% comment %} <div class="col-md-3">
                         <a href="">
                             <button id="NSK" class="btn btn-fill btn-default btn-lg" type="button">대응 안내 챗봇 상담하기</button>   
                         </a>
-                    </div>
+                    </div> {% endcomment %}
                 </div>                
             </div>
         </div>

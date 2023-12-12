@@ -25,7 +25,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>BopiBopi</title>
+    <title>Dvdvdip</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/gaia.css' %}" rel="stylesheet"/>
@@ -341,7 +341,7 @@
 
 <!-- 클릭 이벤트 처리를 위한 스크립트 -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+{% comment %} <script>
     $(document).ready(function(){ //문서가 로드되면 실행
         var isBlockingActive = false;  // 초기 값은 비활성화
         var blockedNumbersList = $("#blocked_numbers_list");
@@ -363,6 +363,26 @@
             isBlockingActive = !isBlockingActive;  // 상태를 토글
         });
     });
-</script>
+</script> {% endcomment %}
+
+{% comment %} django channels 설정 관련 {% endcomment %}
+{% comment %} <script>
+    // 웹 소켓 연결 생성
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws/spectrogram/');
+    // 연결 열리면 실행
+    socket.onopen = (event) => {
+        console.log('WebSocket connection opened:', event);
+    };
+    // 이벤트 수신 시 실행
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data); // 데이터가 json 문자열로 전달됨
+        console.log('WebSocket message received:', data);
+        // 여기서 받은 데이터를 원하는대로 처리
+    }; 
+    // 연결 종료
+    socker.onclose = (event) => {
+        console.log('WebSocket connection closed:', event);
+    };
+</script> {% endcomment %}
 
 </html>

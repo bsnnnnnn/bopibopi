@@ -16,3 +16,35 @@ def calculate_embedding(sentence, model, tokenizer):
     embedding = output.last_hidden_state.mean(dim=1).squeeze().numpy()
     embedding = embedding.astype(float)
     return embedding
+
+############## mel_spectrogram
+import librosa
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+
+# 오디오 파일 멜 스펙트로그램, MFCC로 변환
+def convert_audio_to_mel_spectrogram(audio_file_path):
+    y, sr = librosa.load(audio_file_path, sr=None)
+    mel_spectrogram = librosa.feature.melspectrogram(y=y, sr=sr)
+    mfcc = librosa.feature.mfcc(y=y, sr=sr)
+    mel_spectrogram_db = librosa.power_to_db(mel_spectrogram, ref=np.max)  # dB 스케일로 변환
+
+    # 현재 시간 기반으로 한 이름 생성
+    timestamp = int(time.time())
+    mel_spectrogram_img_path = f'media\mel_spectrograms_img\mel_spectrogram_img_{timestamp}.png'
+    mel_spectrogram_np_path = f'media\mel_spectrograms_np\mel_spectrogram_np_{timestamp}.npy'
+    mfcc_path = f'media\mfcc\mfcc_{timestamp}.npy'
+
+    # 넘파이로 저장
+    np.save(mel_spectrogram_np_path, mel_spectrogram_db)
+    np.save(mfcc_path, mfcc)
+
+    # 이미지로 저장
+    plt.figure(figsize=(10, 4))
+    librosa.display.specshow(mel_spectrogram_db, x_axis='time', y_axis='mel', sr=sr, fmax=8000)
+    plt.colorbar(format='%+2.0f dB')
+    plt.title('Mel-Spectrogram')
+    plt.savefig(mel_spectrogram_img_path)
+
+    return mel_spectrogram_img_path, mel_spectrogram_np_path, mfcc_path

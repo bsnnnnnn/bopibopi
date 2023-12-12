@@ -25,19 +25,20 @@
                             </div>
                         </div> {% endcomment %}
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card card-plain">
                                 <div class="content">
                                     <a href="">
                                         <div class="icon text-info">
                                             <i class="pe-7s-attention"></i>
                                         </div>
-                                        <h3 id="NSK" class="text-gray">의심내용</h3>
+                                        <h3 id="NSK" class="text-gray">의심번호</h3>
                                         <br>
                                         <div style="display: inline-block;">
-                                            <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">{{ result_cnt }}</h2>
+                                            <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">010-0000-0000</h2>
+                                            {% comment %} {{ result_cnt }} {% endcomment %}
                                         </div>
-                                        <h3 id="NSK" style="display: inline;">건</h3>
+                                        {% comment %} <h3 id="NSK" style="display: inline;">건</h3> {% endcomment %}
                                         <br>
                                         <br>
                                         <!-- <h4 id="NSK">세부내용 확인하기</h4> -->
@@ -48,7 +49,7 @@
                         </div>
 
                         
-                        <div class="col-md-4">
+                        {% comment %} <div class="col-md-6">
                             <div class="card card-plain">
                                 <div class="content">
                                     <a href="">
@@ -67,9 +68,9 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div id="number_block" class="card card-plain">
                                 {% comment %} 의심번호 차단하기 {% endcomment %}
                                 <a href="">
@@ -100,26 +101,26 @@
             <!-- <div class="justify-content-center"> -->
             <div class="button-container justify-content-center">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/rel_org/">
                             <button id="NSK" class="btn btn-info btn-lg" type="button">관련 기관 정보 보기</button>
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/notify/">
                             <button id="NSK" class="btn btn-fill btn-info btn-lg" type="button">의심번호 신고하기</button>
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <a href="/victim_guide/">
                             <button id="NSK" class="btn btn-info btn-lg" type="button">피해 시 대응방법 보기</button>   
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    {% comment %} <div class="col-md-3">
                         <a href="">
                             <button id="NSK" class="btn btn-fill btn-default btn-lg" type="button">대응 안내 챗봇 상담하기</button>   
                         </a>
-                    </div>
+                    </div> {% endcomment %}
                 </div>                
             </div>
         </div>
