@@ -61,43 +61,43 @@ class MFCC(models.Model):
 #         # using = 'second_db'
 
 # pinecone
-class MFCC_vec(models.Model):
-    # Pinecone 벡터 필드 추가
-    id = models.AutoField(primary_key=True)
-    vector = models.JSONField(null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+# class MFCC_vec(models.Model):
+#     # Pinecone 벡터 필드 추가
+#     id = models.AutoField(primary_key=True)
+#     vector = models.JSONField(null=True, blank=True)
+#     updated_at = models.DateTimeField(auto_now_add=True)
 
-    def save_to_pinecone(self):
-        # Pinecone에 벡터 색인
-        pinecone.create_index(index_name="mfcc", dimension=331)
-        pinecone.upsert(index_name="mfcc", ids=[str(self.id)], vectors=[self.vector])
+#     def save_to_pinecone(self):
+#         # Pinecone에 벡터 색인
+#         pinecone.create_index(index_name="mfcc", dimension=331)
+#         pinecone.upsert(index_name="mfcc", ids=[str(self.id)], vectors=[self.vector])
 
-    # def search_similar(self):
-    #     # Pinecone를 사용하여 유사한 벡터 검색
-    #     results = pinecone.query(index_name="mel_np", query_vector=self.vector, top_k=5)
-    #     # 결과 처리...
+#     # def search_similar(self):
+#     #     # Pinecone를 사용하여 유사한 벡터 검색
+#     #     results = pinecone.query(index_name="mel_np", query_vector=self.vector, top_k=5)
+#     #     # 결과 처리...
 
-class mel_np(models.Model):
-    # Pinecone 벡터 필드 추가
-    id = models.AutoField(primary_key=True)
-    vector = models.JSONField(null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+# class mel_np(models.Model):
+#     # Pinecone 벡터 필드 추가
+#     id = models.AutoField(primary_key=True)
+#     vector = models.JSONField(null=True, blank=True)
+#     updated_at = models.DateTimeField(auto_now_add=True)
     
-    def save_to_pinecone(self):
-        # Pinecone에 벡터 색인
-        pinecone.create_index(index_name="mel_np", dimension=331)
-        pinecone.upsert(index_name="mel_np", ids=[str(self.id)], vectors=[self.vector])
+#     def save_to_pinecone(self):
+#         # Pinecone에 벡터 색인
+#         pinecone.create_index(index_name="mel_np", dimension=331)
+#         pinecone.upsert(index_name="mel_np", ids=[str(self.id)], vectors=[self.vector])
 
-class mel_img(models.Model):
-    # Pinecone 벡터 필드 추가
-    id = models.AutoField(primary_key=True)
-    vector = models.JSONField(null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+# class mel_img(models.Model):
+#     # Pinecone 벡터 필드 추가
+#     id = models.AutoField(primary_key=True)
+#     vector = models.JSONField(null=True, blank=True)
+#     updated_at = models.DateTimeField(auto_now_add=True)
     
-    def save_to_pinecone(self):
-        # Pinecone에 벡터 색인
-        pinecone.create_index(index_name="mel_img", dimension=331)
-        pinecone.upsert(index_name="mel_img", ids=[str(self.id)], vectors=[self.vector])
+#     def save_to_pinecone(self):
+#         # Pinecone에 벡터 색인
+#         pinecone.create_index(index_name="mel_img", dimension=331)
+#         pinecone.upsert(index_name="mel_img", ids=[str(self.id)], vectors=[self.vector])
 
 # 텍스트 테이블 1. 메일, 문자
 class Text_mail(models.Model):

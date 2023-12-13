@@ -181,7 +181,7 @@ a:hover {
 }
 
 .text-info {
-  color: #00abc0 !important;
+  color: #297eca !important;
 }
 
 .text-success {
@@ -245,10 +245,10 @@ a:hover {
 }
 
 .separator-info {
-  color: #00abc0;
+  color: #297eca;
 }
 .separator-info:before, .separator-info:after {
-  border-color: #00abc0;
+  border-color: #297eca;
 }
 
 .separator-success {
@@ -378,7 +378,7 @@ body > .navbar-collapse a {
 }
 
 .avatar-info {
-  border-color: #00abc0;
+  border-color: #297eca;
 }
 
 .avatar-success {
@@ -753,8 +753,8 @@ a.carousel-control span.fa {
 
 .btn-info,
 .navbar .navbar-nav > li > a.btn-info {
-  border-color: #00abc0;
-  color: #00abc0;
+  border-color: #297eca;
+  color: #297eca;
 }
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle,
 .navbar .navbar-nav > li > a.btn-info:hover,
@@ -771,12 +771,12 @@ a.carousel-control span.fa {
 .navbar .navbar-nav > li > a.btn-info[disabled],
 .navbar .navbar-nav > li > a.btn-info.disabled {
   background-color: transparent;
-  border-color: #00abc0;
+  border-color: #297eca;
 }
 .btn-info.btn-fill,
 .navbar .navbar-nav > li > a.btn-info.btn-fill {
   color: #FFFFFF;
-  background-color: #00abc0;
+  background-color: #297eca;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -795,7 +795,7 @@ a.carousel-control span.fa {
 }
 .btn-info .caret,
 .navbar .navbar-nav > li > a.btn-info .caret {
-  border-top-color: #00abc0;
+  border-top-color: #297eca;
 }
 
 .btn-warning,
@@ -1989,7 +1989,7 @@ a.carousel-control span.fa {
 }
 
 .label-info {
-  background-color: #00abc0;
+  background-color: #297eca;
 }
 
 .label-success {
@@ -2137,7 +2137,7 @@ a.carousel-control span.fa {
 }
 
 .dropdown-menu.dropdown-info > li > a:hover, .dropdown-menu.dropdown-info > li > a:focus {
-  color: #00abc0;
+  color: #297eca;
 }
 .dropdown-menu.dropdown-success > li > a:hover, .dropdown-menu.dropdown-success > li > a:focus {
   color: #7accb8;
@@ -2320,7 +2320,7 @@ a.carousel-control span.fa {
   margin: 0 auto;
 }
 .card-blog .line-divider.line-info {
-  border-color: #00abc0;
+  border-color: #297eca;
 }
 .card-blog .line-divider.line-success {
   border-color: #7accb8;
@@ -2954,7 +2954,7 @@ body.noscroll {
 }
 
 .list-logos-info .active .client-logo {
-  color: #00abc0;
+  color: #297eca;
 }
 
 .list-logos-success .active .client-logo {

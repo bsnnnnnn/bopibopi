@@ -168,12 +168,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #     'phishing': 'custom_schema.phishing_migrations',
 # }
 
-
 ################### pinecone
-import pinecone
+# import pinecone
 
-# pinecone 클라이언트 초기화
-pinecone.init(
-    api_key="a4e65403-dcf3-4148-81d9-efe3b10c9be3",
-    environment="gcp-starter"
-    )
+# # pinecone 클라이언트 초기화
+# pinecone.init(
+#     api_key="a4e65403-dcf3-4148-81d9-efe3b10c9be3",
+#     environment="gcp-starter"
+#     )
