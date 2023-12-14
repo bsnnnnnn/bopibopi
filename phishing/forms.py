@@ -1,5 +1,5 @@
 from django import forms
-from .models import CallHistory
+from .model.models import CallHistory
 
 class AudioDataForm(forms.ModelForm):
     class Meta:

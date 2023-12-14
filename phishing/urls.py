@@ -28,7 +28,7 @@ urlpatterns = [
     path('test_result/', views.test_result, name='test_result' ), #피피티용 결과 페이지
 
     # 오디오 파일 입력 및 멜 스펙트로그램 테스트 페이지
-    path('audio_test/', views.audio_test, name='audio_test'),
+    # path('audio_test/', views.audio_test, name='audio_test'),
     # path('audio_test/', views.SpectrogramView.as_view(), name='audio_test'),
     path('success/', views.success_view, name='success'),
 

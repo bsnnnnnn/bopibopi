@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
-from .models import Organizations, CallHistory, Text_mail, MelSpectrograms, MFCC
+# phishing/views.py
+from .model.models import Organizations, CallHistory, Text_mail, MelSpectrograms, MFCC
+# from .models.models import Organizations, CallHistory, Text_mail, MelSpectrograms, MFCC
 from django.core.paginator import Paginator
 
 from django.views import View
@@ -38,12 +39,14 @@ def result_num_low(request):
 
 # 모델 결과 : 위험도 높음
 def result_high(request):
-    is_blocking_active = False
-    return render(request, 'result_model_high.html', {'is_blocking_active':is_blocking_active})
+    # is_blocking_active = False
+    detection_list = CallHistory.objects.all()
+    return render(request, 'result_model_high.html', {'detection_list':detection_list})
 
 # 모델 결과 : 위험도 낮음
 def result_low(request):
-    return render(request, 'result_model_low.html')
+    detection_list = CallHistory.objects.all()
+    return render(request, 'result_model_low.html', {'detection_list':detection_list})
 
 # 기관 정보
 def rel_org(request): #기관 전체
@@ -114,22 +117,18 @@ def agreement(request):
 # 탐지 내역 조회테스트
 def detection_history(request):
     detection_list = CallHistory.objects.all()
-    return render(request, 'det_history_test.html', {'detection_list':detection_list})
+    return render(request, 'detection_history.html', {'detection_list':detection_list})
 
 ###### 실시간 데이터베이스 테스트
-def update_database(image_path):
-    CallHistory.objects.create(image=image_path)
+# def update_database(image_path):
+#     CallHistory.objects.create(image=image_path)
 
-def my_view(request):
-    # 실시간으로 멜 스펙트로그램 이미지 경로를 받아와 데이터베이스에 저장
-    # 모델과 연동해서 멜 스펙트로그램 저장 및 해당 경로 받아오는 수정 필요
-    image_path = "spectrograms" 
-    update_database(image_path)
-    return render(request, 'deepvoice_detection.html')
-
-# 딥보이스 탐지 페이지
-def deepvoice_detection(request):
-    return render(request, 'deepvoice_detection.html')
+# def my_view(request):
+#     # 실시간으로 멜 스펙트로그램 이미지 경로를 받아와 데이터베이스에 저장
+#     # 모델과 연동해서 멜 스펙트로그램 저장 및 해당 경로 받아오는 수정 필요
+#     image_path = "spectrograms" 
+#     update_database(image_path)
+#     return render(request, 'deepvoice_detection.html')
 
 ########################################## KcBERT
 import pandas as pd
@@ -234,90 +233,96 @@ class SimilarityView(View):
 def test_result(request):
     return render(request, 'ppt_result.html')
 
-from .utils import convert_audio_to_mel_spectrogram
+from .utils import convert_audio_to_mel_spectrogram, load_resnet_model, get_rand_numbers
+import cv2
+from django.shortcuts import get_object_or_404
 
 # 오디오 파일 입력 받기
-def audio_test(request):
+def deepvoice_detection(request):
     if request.method == 'POST':
-        form = AudioDataForm(request.POST, request.FILES) # 
+        form = AudioDataForm(request.POST, request.FILES)
         if form.is_valid():
             audio_data = form.save()
             # audio_data = 'C:/Users/03123/dvdvdeep_test/bopibopi/1.wav'
-
+            
             # 디버깅 출력 추가
             # print('Uploaded file path:', audio_data.audio_file.path)
 
+             # 이미 저장된 오디오 파일이 있는지 확인
+            callhistory = CallHistory()
+
+            callhistory, created = CallHistory.objects.get_or_create(
+                audio_file=audio_data.audio_file.name,  # 파일 이름 또는 고유 식별자를 전달합니다
+                defaults={'results': False, 'numbers': get_rand_numbers()} # 여기서 번호 생성 안되는 것 같음... 왜?
+            )
+
+            call_number = get_rand_numbers()
+            callhistory.numbers = call_number
+
             # 음성 파일을 멜 스펙트로그램으로 변환
             mel_spectrogram_img_path, mel_spectrogram_np_path, mfcc_path = convert_audio_to_mel_spectrogram(audio_data.audio_file.path)
+
+            ######## 모델
+            mel_img = cv2.imread(mel_spectrogram_img_path)
+            # 이미지를 [0, 1] 범위로 Min-Max 정규화
+            normalized_mel_spectrogram = (mel_img - mel_img.min()) / (mel_img.max() - mel_img.min())
+            
+            # 데이터 resize
+            resized_mel = cv2.resize(normalized_mel_spectrogram, (224, 224))
+            resized_mel_batched = np.expand_dims(resized_mel, axis=0)
+
+            # 모델
+            model = load_resnet_model()
+            result = model.predict(resized_mel_batched)
+            result_detection = result[0][0]
+
+            threshold = 0.5
 
             # 모델 인스턴스 생성 및 모델에 멜 스펙트로그램 경로 데이터 저장
             mel_spectrograms = MelSpectrograms()
             mel_spectrograms.mel_img = mel_spectrogram_img_path
             mel_spectrograms.mel_np = mel_spectrogram_np_path
-            mel_spectrograms.save()
+            mel_spectrograms.call_history = callhistory
 
             mfcc_model = MFCC()
             mfcc_model.mfcc = mfcc_path
-            mfcc_model.save()
+            mfcc_model.call_history = callhistory
 
-            # return redirect('success')
-            return render(request, 'audio_test.html', {'form':form})
+            # 결과에 따라 다른 페이지 반환
+            if result_detection >= threshold: # 복제 음성 의심
+                # callhistory = CallHistory()
+                callhistory.results = True # 탐지 결과 저장
+                # callhistory.numbers = get_rand_numbers() # 전화번호 랜덤 생성
+                callhistory.save()
+
+                mel_spectrograms.category = 1
+                mel_spectrograms.save()
+
+                mfcc_model.category = 1
+                mfcc_model.save()
+
+                return render(request, 'result_model_high.html', {'result':result_detection, 'call_number':call_number})
+            else:
+                # callhistory = CallHistory()
+                callhistory.results = False # 탐지 결과 저장
+                # callhistory.numbers = get_rand_numbers() # 전화번호 랜덤 생성
+                callhistory.save()
+
+                mel_spectrograms.category = 0
+                mel_spectrograms.save()
+
+                mfcc_model.category = 0
+                mfcc_model.save()
+                # return redirect('success')
+                return render(request, 'result_model_low.html', {'result':result_detection, 'call_number':call_number})
         
     else: # 저장에 실패할 경우
         form = AudioDataForm()
     
-    return render(request, 'audio_test.html', {'form':form})
+    return render(request, 'deepvoice_detection.html', {'form':form})
 
 def success_view(request):
     return render(request, 'success.html')
-
-# # 버튼 누르면 mel-spectrogram 시행되게
-# class SpectrogramView(View):
-#     template_name = 'audio_test.html'
-#     def get(self, request):
-#         return render(request, 'audio_test.html')
-#     def post(self, request):
-#         audio_data = '1.wav'
-
-#         # 음성 파일을 멜 스펙트로그램으로 변환
-#         mel_spectrogram_img_path, mel_spectrogram_np_path = convert_audio_to_mel_spectrogram(audio_data.audio_file.path)
-
-#         # 멜 스펙트로그램 경로를 모델에 저장
-#         audio_data.mel_spectrogram_img = mel_spectrogram_img_path
-#         audio_data.mel_spectrogram_np = mel_spectrogram_np_path
-#         audio_data.save()
-
-#         return render(request, 'success.html')
-
-# import os
-# import librosa
-# import matplotlib.pyplot as plt
-# import numpy as np
-# from django.conf import settings
-# from django.urls import reverse
-
-# def audio_test(request):
-#     if request.method == 'POST':
-#         form = AudioDataForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             audio_instance = form.save()
-
-#             # Get the uploaded file path
-#             audio_file_path = os.path.join(settings.MEDIA_ROOT, str(audio_instance.audio_file))
-
-#             # Convert audio to mel spectrogram
-#             y, sr = librosa.load(audio_file_path)
-#             mel_spectrogram = librosa.feature.melspectrogram(y=y, sr=sr)
-#             librosa.display.specshow(librosa.power_to_db(mel_spectrogram, ref=np.max))
-#             plt.savefig(os.path.join(settings.MEDIA_ROOT, 'mel_spectrogram.png'))
-
-#             # return redirect('phishing:audio_test')
-#             # return redirect(reverse('audio_test'))  # Redirect to the same page after processing
-#             return render(request, 'audio_test.html', {'form':form})
-#     else:
-#         form = AudioDataForm()
-
-#     return render(request, 'audio_test.html', {'form': form})
 
 
 

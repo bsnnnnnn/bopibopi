@@ -5,25 +5,13 @@
     <div class="container">
         <div class="text-area">
             <div class="title">
-                <h1 id="NSK">탐지 결과</h1>
+                <h1 id="NSK">복제 음성 탐지 결과</h1>
             <div class="separator separator-info">✻</div>
-            <h4 id="NSK" class="text-gray">{{ cat }} 탐지 결과입니다.</h4>
+            <!-- <h4 id="NSK" class="text-gray">{{ cat }} 탐지 결과입니다.</h4> -->
 
             <div class="section section-cards">
                 <div class="separator-container">        
                     <div class="row justify-content-center">
-                        {% comment %} <div class="col-md-4">
-                            <div class="card card-plain">
-                                <div class="content">
-                                    <div class="icon text-info">
-                                        <i class="pe-7s-attention"></i>
-                                    </div>
-                                    <p id="NSK">해당 번호/문자는</p>
-                                    <div class="card-title text-info"><h3 id="NSK">의심되는 번호/문자</h3></div>
-                                    <span id="NSK">입니다.</span>
-                                </div>
-                            </div>
-                        </div> {% endcomment %}
 
                         <div class="col-md-6">
                             <div class="card card-plain">
@@ -32,14 +20,12 @@
                                         <div class="icon text-info">
                                             <i class="pe-7s-attention"></i>
                                         </div>
+                                        <!-- <h3 id="NSK" class="text-gray">{{ result }}</h3> -->
                                         <h3 id="NSK" class="text-gray">의심번호</h3>
                                         <br>
                                         <div style="display: inline-block;">
-                                            <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">010-0000-0000</h2>
-                                            {% comment %} {{ result_cnt }} {% endcomment %}
+                                            <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">{{ call_number }}</h2>
                                         </div>
-                                        {% comment %} <h3 id="NSK" style="display: inline;">건</h3> {% endcomment %}
-                                        <br>
                                         <br>
                                         <!-- <h4 id="NSK">세부내용 확인하기</h4> -->
                                         <br>
@@ -47,28 +33,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        
-                        {% comment %} <div class="col-md-6">
-                            <div class="card card-plain">
-                                <div class="content">
-                                    <a href="">
-                                        <!-- <div class="icon text-info">
-                                            <i class="pe-7s-attention"></i>
-                                        </div> -->
-                                        <h3 id="NSK" class="text-info">의심번호 목록</h3>
-                                        <div style="display: inline-block;">
-                                            <!-- <h2 id="NSK" class="number text-info" style="display: inline; color: your_color;">12</h2> -->
-                                            <ul id="NSK" style="list-style: none; text-align: center;">
-                                                {% for data in inputs %}
-                                                    <li>{{ data.phone_number }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div> {% endcomment %}
 
                         <div class="col-md-6">
                             <div id="number_block" class="card card-plain">

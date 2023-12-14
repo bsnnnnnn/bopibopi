@@ -1,5 +1,6 @@
 from transformers import AutoModel, AutoTokenizer
 import torch
+import random
 
 def load_kcbert_model():
     # KcBERT tokenizer가 있는 디렉토리 경로 지정
@@ -22,6 +23,10 @@ import librosa
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import tensorflow as tf
+import os
+from PIL import Image
+import cv2
 
 # 오디오 파일 멜 스펙트로그램, MFCC로 변환
 def convert_audio_to_mel_spectrogram(audio_file_path):
@@ -42,9 +47,25 @@ def convert_audio_to_mel_spectrogram(audio_file_path):
 
     # 이미지로 저장
     plt.figure(figsize=(10, 4))
-    librosa.display.specshow(mel_spectrogram_db, x_axis='time', y_axis='mel', sr=sr, fmax=8000)
+    librosa.display.specshow(mel_spectrogram_db, sr=sr, x_axis='time', y_axis='mel', fmax=8000) #fmax : 주파수의 최대값
     plt.colorbar(format='%+2.0f dB')
-    plt.title('Mel-Spectrogram')
+    # plt.title('Mel-Spectrogram')
     plt.savefig(mel_spectrogram_img_path)
 
     return mel_spectrogram_img_path, mel_spectrogram_np_path, mfcc_path
+
+# resnet 모델 
+def load_resnet_model():
+    resnet_path = "phishing\model"
+    model = tf.keras.models.load_model(resnet_path)
+    return model
+
+# 전화번호 랜덤 생성
+def get_rand_numbers():
+    numbers = '0123456789'
+    num1 = "".join(random.sample(numbers, 4))
+    num2 = "".join(random.sample(numbers, 4))
+
+    phone_num = f"010-{num1}-{num2}"
+
+    return phone_num
